@@ -1,0 +1,141 @@
+[gd_scene load_steps=6 format=3 uid="uid://main_scene"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_1"]
+[ext_resource type="PackedScene" uid="uid://bvqxm8yjwxn3r" path="res://scenes/Player.tscn" id="2_1"]
+[ext_resource type="PackedScene" uid="uid://c8yjm3n4xwxn3r" path="res://scenes/Ball.tscn" id="3_1"]
+[ext_resource type="PackedScene" uid="uid://d8yjm3n4xwxn3r" path="res://scenes/Goal.tscn" id="4_1"]
+[ext_resource type="Script" path="res://scripts/HUD.gd" id="5_1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(1280, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform1"]
+size = Vector2(300, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform2"]
+size = Vector2(300, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform3"]
+size = Vector2(400, 30)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_1")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(640, 700)
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+offset_left = -640.0
+offset_top = -20.0
+offset_right = 640.0
+offset_bottom = 20.0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Platform1" type="StaticBody2D" parent="."]
+position = Vector2(200, 550)
+
+[node name="ColorRect" type="ColorRect" parent="Platform1"]
+offset_left = -150.0
+offset_top = -15.0
+offset_right = 150.0
+offset_bottom = 15.0
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1"]
+shape = SubResource("RectangleShape2D_platform1")
+
+[node name="Platform2" type="StaticBody2D" parent="."]
+position = Vector2(1080, 550)
+
+[node name="ColorRect" type="ColorRect" parent="Platform2"]
+offset_left = -150.0
+offset_top = -15.0
+offset_right = 150.0
+offset_bottom = 15.0
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2"]
+shape = SubResource("RectangleShape2D_platform2")
+
+[node name="Platform3" type="StaticBody2D" parent="."]
+position = Vector2(640, 400)
+
+[node name="ColorRect" type="ColorRect" parent="Platform3"]
+offset_left = -200.0
+offset_top = -15.0
+offset_right = 200.0
+offset_bottom = 15.0
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3"]
+shape = SubResource("RectangleShape2D_platform3")
+
+[node name="Player1" parent="." instance=ExtResource("2_1")]
+position = Vector2(150, 600)
+player_id = 1
+player_color = Color(0, 0.5, 1, 1)
+
+[node name="Player2" parent="." instance=ExtResource("2_1")]
+position = Vector2(1130, 600)
+player_id = 2
+player_color = Color(1, 0.3, 0, 1)
+
+[node name="Ball" parent="." instance=ExtResource("3_1")]
+position = Vector2(640, 300)
+
+[node name="Goal1" parent="." instance=ExtResource("4_1")]
+position = Vector2(50, 600)
+goal_owner = 1
+goal_color = Color(0, 0.5, 1, 0.3)
+
+[node name="Goal2" parent="." instance=ExtResource("4_1")]
+position = Vector2(1230, 600)
+goal_owner = 2
+goal_color = Color(1, 0.3, 0, 0.3)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_1")
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "Player 1: 0  |  Player 2: 0"
+horizontal_alignment = 1
+
+[node name="ControlsLabel" type="Label" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -60.0
+offset_right = 300.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 18
+text = "P1: A/D + SPACE  |  P2: ARROWS + RIGHT SHIFT"
+horizontal_alignment = 1
